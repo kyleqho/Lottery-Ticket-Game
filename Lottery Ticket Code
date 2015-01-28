@@ -1,0 +1,121 @@
+/*Kyle Ho CECS 277
+ *Purpose: To create a lottery ticket game.
+ *Input: Number of tickets desired.
+ *Output: Lottery tickets with 6 unique numbers that do not repeat*/
+ 
+//Driver of the program
+public class LotteryDriver{
+  public static void main(String[] random){
+   Lottery call = new Lottery(); 
+   call.display();
+  }
+}
+
+//Bulk of the program
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+public class Lottery{
+//Creating the array lists
+ArrayList<Integer> lottery; 
+ArrayList<Integer> lotto; 
+ArrayList<ArrayList<Integer>> lastTicket; //array list of array lists
+Random random = new Random(); //Random number for replacing similar numbers
+static int lotterySize;
+Scanner input = new Scanner(System.in);
+
+//Constructor for the arrays
+Lottery(){
+  lottery = new ArrayList<Integer>();
+  lotto = new ArrayList<Integer>();
+  lastTicket = new ArrayList<ArrayList<Integer>>();
+}
+
+//Prompting user to input a desired number of tickets
+  public void LotterySize(){
+    System.out.println("How many lottery tickets would you like to make?");
+    lotterySize = input.nextInt();
+    LotteryGenerator(lotterySize);
+  }
+  
+//The generation of tickets
+  public void LotteryGenerator(int lotterySize){
+    int counter = 0;
+    do{ //Use of Do-while loop to obtain the desired number of tickets
+    
+      //Adding 49 numbers into one of the two array lists
+      for(int i=1;i<50;i++){
+      lotto.add(i);
+      }
+      
+      //Shuffles the array list
+      Collections.shuffle(lotto);
+      
+      //Creating a new ticket every single time.
+      lottery = new ArrayList<Integer>();
+      
+      System.out.println("Lottery ticket #"+(counter+1)+" is: ");
+      
+      //Adding the random numbers into the second array list
+      for(int i=0;i<6;i++){
+        int get = lotto.get(i);
+        lottery.add(get);
+        //Initialize this variable to 0 again, ensuring no repeats
+        get = 0;
+      }
+      
+      //Checking for repeats.
+      for(int i=0;i<6;i++){
+      
+      //Ensures that there will be no out of bounds error
+        if(i != 0){
+          for(int j=0;j<6;j++){
+          
+          //Checking if the current number is equal to the rest of its brother and sister numbers as well as
+          //ensuring that the index is NOT the same
+            if(lottery.get(i).equals(lottery.get(j)) && (i != j)){
+            
+            //Initializing the random number to 0 every time
+              int randomize = 0;
+              
+              //Random number between 1 and 49
+              randomize = random.nextInt(49)+1;
+              
+              //Removing the current number IF it is the same
+              lottery.remove(i);
+              
+              //Adding a new random number at the current location
+              lottery.add(i, randomize);
+            }
+          }
+        }
+      }
+      
+      //Adding an array to the array list of array lists.
+      lastTicket.add(lottery);
+      
+      //Sorts the 2nd array list that contains the lottery ticket
+      Collections.sort(lottery);
+      
+      //Printing the lottery ticket
+      System.out.print(lastTicket);
+      System.out.println("\n");
+      
+      //Clearing the random numbers and lottery ticket.  If lottery.clear(); is commented, you will see each of the
+      //lottery tickets that were created before the current one
+      lotto.clear();
+      lottery.clear();
+      counter++;
+      
+    }while(counter != lotterySize);
+  }
+    
+    //Display method that returns an empty value
+    public String display(){
+      LotterySize();
+      return "";
+    }
+}
+
