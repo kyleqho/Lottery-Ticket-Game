@@ -1,7 +1,8 @@
-/*Kyle Ho CECS 277
+/*Kyle Ho
  *Purpose: To create a lottery ticket game.
  *Input: Number of tickets desired.
- *Output: Lottery tickets with 6 unique numbers that do not repeat*/
+ *Output: Lottery tickets with 6 unique numbers that do not repeat
+ *Created in Java*/
  
 //Driver of the program
 public class LotteryDriver{
